@@ -1,9 +1,11 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
-from app.routes import auth
+from app.routes import auth, dashboard
 from app.utils.database import engine, Base, SessionLocal
 from app.models.user import User, UserRole
+from app.models.patient import Patient  # noqa: F401 — imported so create_all sees the table
+from app.models.scan import Scan, ScanStatus  # noqa: F401 — imported so create_all sees the table
 from app.utils.auth import get_password_hash
 
 # Create database tables
@@ -59,6 +61,7 @@ app.add_middleware(
 
 # Include routers
 app.include_router(auth.router)
+app.include_router(dashboard.router)
 
 @app.get("/")
 async def root():
