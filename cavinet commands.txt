@@ -1,0 +1,12 @@
+how to run: 
+1. run redis server:
+   select wsl in the vscode terminal then type: 
+    sudo apt install redis-server
+    sudo service redis-server enable
+    sudo service redis-server start
+2. start backend:
+   pip install -r requirements.txt     #this command is required only for the first time
+   honcho start
+3. start frontend
+   npm run dev
+   

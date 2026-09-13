@@ -5,6 +5,7 @@ import { useAuth } from '../../context/AuthContext';
 import dashboardService from '../../services/dashboardService';
 import StatCard from './StatCard';
 import RecentScansTable from './RecentScansTable';
+import Upload from '../upload/Upload';
 
 const NavItem = ({ to, children, disabled }) => {
   if (disabled) {
@@ -32,6 +33,9 @@ const Dashboard = () => {
   const [scans, setScans] = useState([]);
   const [statsLoading, setStatsLoading] = useState(true);
   const [scansLoading, setScansLoading] = useState(true);
+
+  // **Add this line** to manage the upload modal state
+  const [open, setOpen] = useState(false);
 
   const loadDashboard = useCallback(async () => {
     setStatsLoading(true);
@@ -79,16 +83,18 @@ const Dashboard = () => {
                 <Link to="/dashboard" className="text-slate-900 text-sm font-medium">
                   Dashboard
                 </Link>
-                <NavItem disabled>Patients</NavItem>
+                <Link to="/patients" className="text-slate-500 hover:text-slate-900 text-sm transition-colors">
+                  Patients
+                </Link>
+
                 <NavItem disabled>Scans</NavItem>
               </div>
             </div>
 
             <div className="flex items-center gap-4">
               <span
-                className={`hidden sm:inline-flex text-[10px] font-mono uppercase tracking-wider px-2 py-1 rounded border ${
-                  isAdmin ? 'border-violet-200 text-violet-700 bg-violet-50' : 'border-cyan-200 text-cyan-700 bg-cyan-50'
-                }`}
+                className={`hidden sm:inline-flex text-[10px] font-mono uppercase tracking-wider px-2 py-1 rounded border ${isAdmin ? 'border-violet-200 text-violet-700 bg-violet-50' : 'border-cyan-200 text-cyan-700 bg-cyan-50'
+                  }`}
               >
                 {user?.role}
               </span>
@@ -125,16 +131,37 @@ const Dashboard = () => {
               {user?.hospital && <> · {user.hospital}</>}
             </p>
           </div>
-          <button
-            disabled
-            title="Available once Module 04 (CT Scan Upload) is live"
-            className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-400 cursor-not-allowed"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-            </svg>
-            Upload scan
-          </button>
+
+          <div>
+            <button
+              onClick={() => setOpen(true)}
+              title="Upload CT Scan"
+              className="inline-flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-700 hover:bg-slate-100"
+            >
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+              Upload scan
+            </button>
+
+            {open && (
+              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+                <div className="bg-white rounded-lg w-[90%] max-w-3xl p-4">
+                  <div className="flex justify-between items-center mb-2">
+                    <h3 className="text-lg font-semibold">Upload CT Scan</h3>
+                    <button onClick={() => setOpen(false)} className="text-slate-500">Close</button>
+                  </div>
+
+                  <Upload
+                    onSuccess={(jobId) => {
+                      setOpen(false);
+                      alert('Upload queued: ' + jobId);
+                    }}
+                  />
+                </div>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Stats */}
@@ -160,11 +187,14 @@ const Dashboard = () => {
             <h3 className="text-slate-500 text-xs font-mono uppercase tracking-wider mb-4">Quick access</h3>
             <ul className="space-y-3">
               <li className="flex items-center justify-between">
-                <span className="text-sm text-slate-400">Patient profiles</span>
+                <Link to="/patients" className="text-sm text-slate-500 hover:text-slate-900 transition-colors">
+                  Patient profiles
+                </Link>
                 <span className="text-[9px] font-mono uppercase tracking-wider bg-slate-100 border border-slate-200 text-slate-400 px-1.5 py-0.5 rounded">
-                  M-03 soon
+                  M-03
                 </span>
               </li>
+
               <li className="flex items-center justify-between">
                 <span className="text-sm text-slate-400">Diagnostic reports</span>
                 <span className="text-[9px] font-mono uppercase tracking-wider bg-slate-100 border border-slate-200 text-slate-400 px-1.5 py-0.5 rounded">
