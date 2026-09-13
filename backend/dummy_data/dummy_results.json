@@ -1,0 +1,10 @@
+{
+  "job_id": "JOB12345",
+  "patient_id": "PAT001",
+  "status": "complete",
+  "cavity_detected": true,
+  "confidence_score": 0.87,
+  "decision_summary": "Cavity detected in left lung region with high confidence.",
+  "heatmap_url": "/static/dummy_heatmap.png",
+  "report_url": "/api/reports/JOB12345"
+}
