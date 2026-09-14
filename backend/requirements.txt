@@ -11,3 +11,4 @@ email-validator
 # Only needed if DATABASE_URL in .env points at Postgres instead of SQLite —
 # safe to leave installed either way.
 psycopg2-binary
+honcho

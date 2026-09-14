@@ -7,6 +7,10 @@ from app.models.user import User, UserRole
 from app.models.patient import Patient  # noqa: F401 — imported so create_all sees the table
 from app.models.scan import Scan, ScanStatus  # noqa: F401 — imported so create_all sees the table
 from app.utils.auth import get_password_hash
+from app.routes import auth, dashboard, patients, uploads 
+from app.routes import report
+
+
 
 # Create database tables
 Base.metadata.create_all(bind=engine)
@@ -62,6 +66,10 @@ app.add_middleware(
 # Include routers
 app.include_router(auth.router)
 app.include_router(dashboard.router)
+app.include_router(patients.router, prefix="/api")
+app.include_router(uploads.router, prefix="/api") 
+app.include_router(report.router, prefix="/api")
+
 
 @app.get("/")
 async def root():

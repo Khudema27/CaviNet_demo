@@ -8,6 +8,9 @@ import Register from './components/auth/Register';
 import ForgotPassword from './components/auth/ForgotPassword';
 import ResetPassword from './components/auth/ResetPassword';
 import Dashboard from './components/dashboard/Dashboard';
+import Patients from './components/patients/Patients';
+import Upload from './components/upload/Upload';
+import PatientProfile from './components/patients/PatientProfile';
 
 function App() {
   return (
@@ -39,6 +42,10 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/" element={<Navigate to="/dashboard" replace />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/patients" element={<Patients />} />
+            <Route path="/upload" element={<Upload />} />
+            <Route path="/patients/:patientId" element={<PatientProfile />} />
+
           </Route>
           
           {/* Catch-all redirect */}

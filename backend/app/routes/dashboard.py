@@ -74,6 +74,7 @@ async def get_recent_scans(
     return [
         ScanSummaryResponse(
             id=s.id,
+            patient_id=s.patient_id,
             patient_name=s.patient.full_name,
             patient_code=s.patient.patient_code,
             uploaded_at=s.uploaded_at,
