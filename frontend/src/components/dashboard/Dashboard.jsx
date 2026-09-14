@@ -7,6 +7,8 @@ import StatCard from './StatCard';
 import RecentScansTable from './RecentScansTable';
 import Upload from '../upload/Upload';
 import ReportButton from '../ReportButton';
+import Patients from '../patients/Patients';
+import PatientProfile from '../patients/PatientProfile';
 
 const NavItem = ({ to, children, disabled }) => {
   if (disabled) {
@@ -87,14 +89,6 @@ const Dashboard = () => {
     },
   ];
 
-  const dummyResult = {
-    job_id: 'JOB12345',
-    cavity_detected: true,
-    confidence_score: 0.87,
-    decision_summary:
-      'Cavity detected in left lung region with high confidence.',
-    heatmap_url: '/static/dummy_heatmap.png',
-  };
 
   return (
     <div className="min-h-screen bg-void bg-scan-grid">
@@ -300,36 +294,6 @@ const Dashboard = () => {
                 </span>
               </li>
             </ul>
-          </div>
-        </div>
-
-        {/* Diagnostic Report */}
-        <div className="bg-white rounded-xl shadow-md p-6 mt-6">
-          <h2 className="text-xl font-semibold text-slate-900 mb-2">
-            Diagnostic Report — Job {dummyResult.job_id}
-          </h2>
-
-          <p className="text-slate-700 mb-1">
-            <span className="font-medium">Summary:</span>{' '}
-            {dummyResult.decision_summary}
-          </p>
-
-          <p className="text-slate-700 mb-3">
-            <span className="font-medium">Confidence:</span>{' '}
-            <span className="text-cyan-600 font-bold">
-              {(dummyResult.confidence_score * 100).toFixed(0)}%
-            </span>
-          </p>
-
-          <div className="flex items-center gap-6">
-            <img
-              src={dummyResult.heatmap_url}
-              alt="Heatmap"
-              className="w-64 h-64 object-cover rounded border border-slate-200 shadow-sm"
-            />
-            <div className="flex flex-col gap-3">
-              <ReportButton jobId={dummyResult.job_id} />
-            </div>
           </div>
         </div>
       </div>

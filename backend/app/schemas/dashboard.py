@@ -13,6 +13,7 @@ class DashboardStatsResponse(BaseModel):
 
 class ScanSummaryResponse(BaseModel):
     id: int
+    patient_id: int
     patient_name: str
     patient_code: str
     uploaded_at: datetime
